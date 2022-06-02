@@ -16,7 +16,7 @@ public class AlunoDAO {
 	}
 
 	public void adicionarBanco(Aluno aluno) {
-		String sql = "INSERT INTO aluno(nome, nome_mae, nome_pai, dt_nasc, dt_cadastro) VALUES(?,?,?,?,?)";
+		String sql = "INSERT INTO aluno(nome, nomeMae, nomePai, dataNascimento, dataCadastro) VALUES(?,?,?,?,?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, aluno.getNome());
@@ -61,10 +61,10 @@ public class AlunoDAO {
 
 			aluno.setId(rs.getInt("id"));
 			aluno.setNome(rs.getString("nome"));
-			aluno.setNomeMae(rs.getString("nome_mae"));
-			aluno.setNomePai(rs.getString("nome_pai"));
-			aluno.setDataNascimento(rs.getString("dt_nasc"));
-			aluno.setDataCadastro(rs.getString("dt_cadastro"));
+			aluno.setNomeMae(rs.getString("nomeMae"));
+			aluno.setNomePai(rs.getString("nomePai"));
+			aluno.setDataNascimento(rs.getString("dataNascimento"));
+			aluno.setDataCadastro(rs.getString("dataCadastro"));
 
 			lista.add(aluno);
 		}

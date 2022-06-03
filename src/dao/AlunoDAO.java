@@ -31,6 +31,24 @@ public class AlunoDAO {
 		}
 	}
 
+	public boolean atualizarAluno(Aluno aluno) {
+		String sql = "Update aluno set nome = ?, nomeMae = ?,nomePai = ?,dataNascimento = ?,dataCadastro = ? WHERE id = ?;";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, aluno.getNome());
+			stmt.setString(2, aluno.getNomeMae());
+			stmt.setString(3, aluno.getNomePai());
+			stmt.setString(4, aluno.getDataNascimento());
+			stmt.setString(5, aluno.getDataCadastro());
+			stmt.setString(6, aluno.getId());
+			stmt.execute();
+			stmt.close();
+			return true;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public List<Aluno> selectListaAlunos() {
 		String sql = "SELECT * FROM aluno";
 		try {
@@ -59,7 +77,7 @@ public class AlunoDAO {
 		while (rs.next()) {
 			Aluno aluno = new Aluno();
 
-			aluno.setId(rs.getInt("id"));
+			aluno.setId(rs.getString("id"));
 			aluno.setNome(rs.getString("nome"));
 			aluno.setNomeMae(rs.getString("nomeMae"));
 			aluno.setNomePai(rs.getString("nomePai"));

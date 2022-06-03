@@ -2,18 +2,18 @@ package entities;
 
 public class Aluno {
 
-	private Integer id;
+	private String id;
 	private String nome;
 	private String nomeMae;
 	private String nomePai;
 	private String dataNascimento;
 	private String dataCadastro;
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -56,5 +56,5 @@ public class Aluno {
 	public void setDataCadastro(String dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
-		
+
 }

@@ -12,18 +12,36 @@ public class AlunoService {
 	private AlunoDAO alunoDAO = new AlunoDAO();
 
 	public Aluno validaAluno(Aluno aluno) {
-		if (
-			aluno.getNome() != null
-			&& !aluno.getNome().isEmpty()
-			&& aluno.getNomeMae() != null
-			&& !aluno.getNomeMae().isEmpty()
-			&& aluno.getDataNascimento() != null
-			&& !aluno.getDataNascimento().isEmpty()
-		) {
+		if (aluno.getNome() != null
+				&& !aluno.getNome().isEmpty()
+				&& aluno.getNomeMae() != null
+				&& !aluno.getNomeMae().isEmpty()
+				&& aluno.getDataNascimento() != null
+				&& !aluno.getDataNascimento().isEmpty()) {
 			aluno.setDataCadastro(new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
 			alunoDAO.adicionarBanco(aluno);
 		} else {
-			System.out.println("Verifique os dados cadastrados. O nome do aluno, nome da mãe e data de nascimento são obrigatórios!");
+			System.out.println(
+					"Verifique os dados cadastrados. O nome do aluno, nome da mãe e data de nascimento são obrigatórios!");
+		}
+
+		return null;
+	}
+
+	public Aluno validaAlunoUpdate(Aluno aluno) {
+		if (aluno.getNome() != null
+				&& !aluno.getNome().isEmpty()
+				&& aluno.getNomeMae() != null
+				&& !aluno.getNomeMae().isEmpty()
+				&& aluno.getDataNascimento() != null
+				&& !aluno.getDataNascimento().isEmpty()
+				&& aluno.getId() != null
+				&& !aluno.getId().isEmpty()) {
+			aluno.setDataCadastro(new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
+			alunoDAO.atualizarAluno(aluno);
+		} else {
+			System.out.println(
+					"Verifique os dados cadastrados. O nome do aluno, nome da mãe e data de nascimento são obrigatórios!");
 		}
 
 		return null;

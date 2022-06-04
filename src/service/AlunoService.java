@@ -9,7 +9,7 @@ import java.util.List;
 
 public class AlunoService {
 
-	private AlunoDAO alunoDAO = new AlunoDAO();
+	private static AlunoDAO alunoDAO = new AlunoDAO();
 
 	public Aluno validaAluno(Aluno aluno) {
 		if (aluno.getNome() != null
@@ -28,7 +28,7 @@ public class AlunoService {
 		return null;
 	}
 
-	public Aluno validaAlunoUpdate(Aluno aluno) {
+	public static Aluno validaAlunoUpdate(Aluno aluno) {
 		if (aluno.getNome() != null
 				&& !aluno.getNome().isEmpty()
 				&& aluno.getNomeMae() != null
@@ -53,5 +53,13 @@ public class AlunoService {
 
 	public List<Aluno> listaAlunoPorId(String id) {
 		return alunoDAO.selectAlunoPorId(id);
+	}
+
+	public boolean deletaAlunoPorId(String id) {
+		if (id != "" && !id.isEmpty()) {
+			return alunoDAO.deletaAlunoPorId(id);
+		} else {
+			return false;
+		}
 	}
 }

@@ -71,6 +71,20 @@ public class AlunoDAO {
 		}
 	}
 
+	public boolean deletaAlunoPorId(String idAluno) {
+		String sql = "Delete from aluno WHERE id = " + idAluno;
+		try {
+			Statement stmt = connection.createStatement();
+			if (stmt.execute(sql)) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	private List<Aluno> recuperaAlunos(Statement stmt, ResultSet rs) throws SQLException {
 		List<Aluno> lista = new ArrayList<Aluno>();
 

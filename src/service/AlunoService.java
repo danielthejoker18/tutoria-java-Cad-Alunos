@@ -47,7 +47,7 @@ public class AlunoService {
 		return null;
 	}
 
-	public List<Aluno> listaAlunos() {
+	public static List<Aluno> listaAlunos() {
 		return alunoDAO.selectListaAlunos();
 	}
 

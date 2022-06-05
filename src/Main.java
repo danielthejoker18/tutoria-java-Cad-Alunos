@@ -1,6 +1,7 @@
 
 import service.AlunoService;
 import service.ProfessorService;
+import service.TurmaService;
 
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -9,6 +10,7 @@ import java.util.Scanner;
 
 import entities.Aluno;
 import entities.Professor;
+import entities.Turma;
 
 public class Main {
 
@@ -20,6 +22,9 @@ public class Main {
 
 	// classe responsavel por manipular Professores
 	private static ProfessorService ProfessorService = new ProfessorService();
+
+	// classe responsavel por manipular Professores
+	private static TurmaService TurmaService = new TurmaService();
 
 	public static void main(String[] args) throws SQLException {
 
@@ -62,6 +67,41 @@ public class Main {
 					break;
 				case "7":
 					limpaTela();
+					atualizaProfessor();
+					pressioneQualquerTecla();
+					break;
+				case "8":
+					limpaTela();
+					deletaProfessorPorId();
+					pressioneQualquerTecla();
+					break;
+				case "9":
+					limpaTela();
+					listarProfessor();
+					pressioneQualquerTecla();
+					break;
+				case "10":
+					limpaTela();
+					adicionarTurma();
+					pressioneQualquerTecla();
+					break;
+				case "11":
+					limpaTela();
+					atualizaTurma();
+					pressioneQualquerTecla();
+					break;
+				case "12":
+					limpaTela();
+					deletaTurmaPorId();
+					pressioneQualquerTecla();
+					break;
+				case "13":
+					limpaTela();
+					listarTurma();
+					pressioneQualquerTecla();
+					break;
+				case "14":
+					limpaTela();
 					System.out.println("Tchau... :)");
 					pressioneQualquerTecla();
 					continuar = false;
@@ -87,7 +127,14 @@ public class Main {
 		System.out.println("4 - Atualizar Aluno");
 		System.out.println("5 - Deletar Aluno");
 		System.out.println("6 - Cadastrar Professor");
-		System.out.println("7 - Sair");
+		System.out.println("7 - Atualizar Professor");
+		System.out.println("8 - Deletar Professor");
+		System.out.println("9 - Listar Professores");
+		System.out.println("10 - Cadastra Turma");
+		System.out.println("11 - Atualiza Turma");
+		System.out.println("12 - Deleta Turma");
+		System.out.println("13 - Listar Turma");
+		System.out.println("14 - Sair");
 	}
 
 	private static void adicionarAluno() {
@@ -119,23 +166,25 @@ public class Main {
 		String resposta = entrada.nextLine();
 		Professor.setNome(resposta);
 
-		System.out.println("Informe o nome da Mae do Professor:");
-		resposta = entrada.nextLine();
-		Professor.setNomeMae(resposta);
-
-		System.out.println("Informe o nome do Pai do Professor:");
-		resposta = entrada.nextLine();
-		Professor.setNomePai(resposta);
-
 		System.out.println("Informe a data de nascimento do Professor (Ex.: 22/02/2000):");
 		resposta = entrada.nextLine();
 		Professor.setDataNascimento(resposta);
 
-		System.out.println("Informe o id da turma em que o Professor está cadastrado (Ex.: 22/02/2000):");
-		resposta = entrada.nextLine();
-		Professor.setIdTurma(resposta);
-
 		ProfessorService.validaProfessor(Professor);
+	}
+
+	private static void adicionarTurma() {
+		Turma Turma = new Turma();
+
+		System.out.println("Informe o nome da Turma:");
+		String resposta = entrada.nextLine();
+		Turma.setNome(resposta);
+
+		System.out.println("Informe o id do Professor");
+		resposta = entrada.nextLine();
+		Turma.setIdProfessor(resposta);
+
+		TurmaService.validaTurma(Turma);
 	}
 
 	private static void atualizaAluno() {
@@ -175,19 +224,29 @@ public class Main {
 		resposta = entrada.nextLine();
 		Professor.setNome(resposta);
 
-		System.out.println("Informe o nome da Mae do Professor:");
-		resposta = entrada.nextLine();
-		Professor.setNomeMae(resposta);
-
-		System.out.println("Informe o nome do Pai do Professor:");
-		resposta = entrada.nextLine();
-		Professor.setNomePai(resposta);
-
 		System.out.println("Informe a data de nascimento do Professor (Ex.: 22/02/2000):");
 		resposta = entrada.nextLine();
 		Professor.setDataNascimento(resposta);
 
 		ProfessorService.validaProfessorUpdate(Professor);
+	}
+
+	private static void atualizaTurma() {
+		Turma Turma = new Turma();
+
+		System.out.println("Informe o id da Turma:");
+		String resposta = entrada.nextLine();
+		Turma.setId(resposta);
+
+		System.out.println("Informe o nome da Turma:");
+		resposta = entrada.nextLine();
+		Turma.setNome(resposta);
+
+		System.out.println("Informe o id do Professor");
+		resposta = entrada.nextLine();
+		Turma.setIdProfessor(resposta);
+
+		TurmaService.validaTurmaUpdate(Turma);
 	}
 
 	private static void listaAlunos() {
@@ -198,6 +257,11 @@ public class Main {
 	private static void listarProfessor() {
 		List<Professor> listaProfessor = ProfessorService.listaProfessor();
 		printaProfessor(listaProfessor);
+	}
+
+	private static void listarTurma() {
+		List<Turma> listaTurma = TurmaService.listaTurma();
+		printaTurma(listaTurma);
 	}
 
 	private static void buscarPorId() {
@@ -212,6 +276,30 @@ public class Main {
 		String idBusca = entrada.nextLine();
 		try {
 			alunoService.deletaAlunoPorId(idBusca);
+			System.out.println("\n\n Registro deletado com sucesso!");
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private static void deletaTurmaPorId() {
+		System.out.print("Informe o id do aluno que deseja excluir: ");
+		String idBusca = entrada.nextLine();
+		try {
+			alunoService.deletaAlunoPorId(idBusca);
+			System.out.println("\n\n Registro deletado com sucesso!");
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private static void deletaProfessorPorId() {
+		System.out.print("Informe o id do Professor que deseja excluir: ");
+		String idBusca = entrada.nextLine();
+		try {
+			ProfessorService.deletaProfessorPorId(idBusca);
 			System.out.println("\n\n Registro deletado com sucesso!");
 
 		} catch (Exception e) {
@@ -298,6 +386,47 @@ public class Main {
 		System.out.printf("%-4s\t", "id");
 		System.out.printf("%-10s\t", "Nome");
 		System.out.printf("%-10s\t", "Data de Nascimento");
+
+	}
+
+	private static void printaTurma(List<Turma> listaTurma) {
+		Iterator<Turma> it = listaTurma.iterator();
+		int i = 0;
+		while (it.hasNext()) {
+			Turma Turma = it.next();
+			if (i == 0) {
+				System.out.printf("%-4s\t", "id");
+			}
+			if (i == 0) {
+				System.out.printf("%-10s\t", "Matéria");
+			}
+			if (i == 0) {
+				System.out.printf("%-10s\t", "Professor");
+			}
+			if (i == 0) {
+				System.out.println();
+			}
+			if (i == 0) {
+				for (int x = 0; x < 50; x++) {
+					System.out.print("=");
+				}
+			}
+			if (i == 0) {
+				System.out.println();
+			}
+			System.out.printf("%-4s\t", Turma.getId() + "|");
+			System.out.printf("%-10s\t", Turma.getNome());
+			System.out.printf("%-10s\t", Turma.getIdProfessor());
+			System.out.println();
+			i++;
+		}
+		for (int x = 0; x < 50; x++) {
+			System.out.print("=");
+		}
+		System.out.println();
+		System.out.printf("%-4s\t", "id");
+		System.out.printf("%-10s\t", "Matéria");
+		System.out.printf("%-10s\t", "Professor");
 
 	}
 

@@ -16,12 +16,12 @@ public class ProfessorDAO {
 	}
 
 	public void adicionarBanco(Professor Professor) {
-		String sql = "INSERT INTO professor(nome, dataNascimento, dataCadastro, idTurma) VALUES(?,?,?,?)";
+		String sql = "INSERT INTO professor(nome, dataNascimento, dataCadastro) VALUES(?,?,?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, Professor.getNome());
-			stmt.setString(4, Professor.getDataNascimento());
-			stmt.setString(5, Professor.getDataCadastro());
+			stmt.setString(2, Professor.getDataNascimento());
+			stmt.setString(3, Professor.getDataCadastro());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
